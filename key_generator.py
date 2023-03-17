@@ -2,7 +2,6 @@ import curve_point_gen
 import help_desk
 from random import randint
 
-
 def key_generation(Fp):
     a = 0
     b = 7
@@ -12,8 +11,15 @@ def key_generation(Fp):
     curve = curve_point_gen.Curve(Fp, generator_G, a, b)
     public_key = help_desk.double_add(curve, generator_G, priv_key)
 
-    print("Coefficient: "+ str(hex(priv_key)))
-    print("Final point and public key: (" + str(hex(public_key.x)) + ", " + str(hex(public_key.y)) + ")")
+    pubkey_b64 = help_desk.encryption(public_key)
+    pem_pubkey = "-----BEGIN PUBLIC KEY-----\n"
+    pem_pubkey += pubkey_b64.decode('utf-8') + "\n"
+    pem_pubkey += "-----END PUBLIC KEY-----\n"
+    print(pem_pubkey)
+    #print("Coefficient: "+ str(hex(priv_key)))
+    #print("Final point and public key: (" + str(hex(public_key.x)) + ", " + str(hex(public_key.y)) + ")")
+    return priv_key, public_key
 
 key_generation(int('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F', 16))
+
 
