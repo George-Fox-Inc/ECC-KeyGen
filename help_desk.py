@@ -1,4 +1,5 @@
 import curve_point_gen
+import base64
 
 
 def infinity_add(curve, point_one, point_two):
@@ -22,6 +23,15 @@ def inverse_mod(curve, x_coordinate):
         print("mod inverse not possible")
     return pow(x_coordinate, curve.p - 2, curve.p)
 
+def encryption(key):
+    if hasattr(key, 'x'):
+        x = key.x
+        y = key.y
+        pubkey_bytes = x.to_bytes(32, byteorder = 'big') + y.to_bytes(32, byteorder = 'big')
+        return base64.b64encode(pubkey_bytes)
+    else:
+        privkey_bytes = key.to_bytes(64, byteorder = 'big')
+        return base64.b64encode(privkey_bytes)
 
 def point_add(curve, point_one, point_two):
     gradient = 0
