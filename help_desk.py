@@ -18,7 +18,6 @@ def point_validity(curve, point):
     return point.y**2 % curve.p == (point.x**3 + curve.a * point.x + curve.b) % curve.p
 
 def inverse_mod(curve, x_coordinate):
-    """to calculate inverse modular you need to use 'pow'"""
     if x_coordinate % curve.p == 0:
         print("mod inverse not possible")
     return pow(x_coordinate, curve.p - 2, curve.p)
